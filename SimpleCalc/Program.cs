@@ -23,30 +23,52 @@ namespace SimpleCalc
             return Console.ReadLine();
         }
 
-        public static double Izracunaj(string operacija, double operand1, double operand2)
+        public static void Izracunaj(string operacija, double operand1, double operand2, out double rezultat)
         {
-            double rez = 0;
+            rezultat = 0;
 
             switch (operacija)
             {
                 case "+":
-                    rez = operand1 + operand2;
+                    rezultat = operand1 + operand2;
                     break;
                 case "-":
-                    rez = operand1 - operand2;
+                    rezultat = operand1 - operand2;
                     break;
                 case "*":
-                    rez = operand1 * operand2;
+                    rezultat = operand1 * operand2;
                     break;
                 case "/":
-                    rez = operand1 / operand2;
+                    rezultat = operand1 / operand2;
+                    break;
+                case "~":
+                    Swap(ref operand1, ref operand2);
+                    Console.WriteLine("Nakon zamene pozicija: {0} {1}", operand1, operand2);
+                    break;
+                case "P":
+                    double p = 0;
+                    Console.WriteLine("Vrednost pi pre poziva = {0}", p);
+                    Pi(out p);
+                    Console.WriteLine("Vrednost pi nakon poziva = {0}", p);
                     break;
                 default:
                     Console.WriteLine("Nepoznata operacija");
                     break;
             }
+        }
 
-            return rez;
+        public static void Swap(ref double a, ref double b)
+        {
+            double temp;
+
+            temp = a;
+            a = b;
+            b = temp;
+        }
+
+        public static void Pi(out double pi)
+        {
+            pi = 3.14159;
         }
 
         static void Main(string[] args)
@@ -61,13 +83,13 @@ namespace SimpleCalc
 
             while (odgovor == POTVRDA) {
 
-                string operacija = KorisnickiUnos("Unesite zeljenu operaciju (+, -, *, /)");
+                string operacija = KorisnickiUnos("Unesite zeljenu operaciju (+, -, *, /, ~, P)");
 
 
                 a = KorisnickiUnosOperanda();
                 b = KorisnickiUnosOperanda();
 
-                rezultat = Izracunaj(operacija, a, b);
+                Izracunaj(operacija, a, b, out rezultat);
 
                 //                                              0  1     2          3
                 Console.WriteLine("Rezultat {0} {3} {1} = {2}", a, b, rezultat, operacija);
